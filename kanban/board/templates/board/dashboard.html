@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Choose Your Board{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid pt-1">
+  <div class="row">
+    <div class="col">
+      <h1>Choose a board</h1>
+    </div>
+  </div>
+  <div class="row row-cols-xs-6 row-cols-md-4">
+    {% for board in kanbanboard_list %}
+      <div class="col">
+        <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><a href="{% url 'board:board' board.id %}">{{ board.name }}</a></h5>
+            </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

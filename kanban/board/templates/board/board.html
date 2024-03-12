@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid pt-1 h-100">
+  <div class="row">
+    <div class="col">
+      <h1>{{ object.name }}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="d-flex flex-items-stretch text-nowrap pb-4">
+    {% for column in object.column_set.all %}
+        <div class="bg-light p-0 rounded d-inline-block shadow me-2" style="width: 20rem;">
+          <div class="sticky-top bg-light rounded p-3" style="z-index: 999;/* Less than nav menu */">
+            <h4 class="mb-0">{{ column.name }}</h4>
+          </div>
+          <div class="cards">
+            {% for ticket in column.get_tickets %}
+              <div class="card border-0 shadow m-3 mt-0">
+                <div class="card-body">
+                  <h5 class="card-title text-break text-wrap">{{ ticket.title }}</h5>
+                  <span class="badge rounded-pill mb-2" style="background-color: #{{ ticket.priority.color }};">{{ ticket.priority.name }}</span>
+                  <p class="mb-1">
+                    {{ ticket.status.name }}
+                  </p>
+                  <p class="mb-1">
+                    {{ ticket.category.name }}
+                  </p>
+                  <p class="mb-0">
+                    {% for assignment in ticket.assigned_to.all %}
+                      <img
+                        src="{% static assignment.get_image_url %}"
+                        title="{{ assignment.name }}"
+                        class="rounded-circle ratio ratio-1x1 profile-image"
+                        alt="Image of {{ assignment.name }}"
+                        style="width: 3rem;"
+                      >
+                    {% endfor %}
+                  </p>
+                </div>
+              </div>
+            {% empty %}
+              <div class="text-center text-secondary">
+                <i class="bi bi-emoji-smile-fill"></i>
+                <p>No tickets in this column</p>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extracss %}
+<style>
+  .profile-image {
+    margin-right: -15px;
+    border: 4px solid #ddd;
+  }
+</style>
+{% endblock %}
