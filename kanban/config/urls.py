@@ -17,10 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from board.views import DashboardView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('board.urls', namespace='board')),
+    path('', DashboardView.as_view(), name='dashboard'),
+    path('board/', include('board.urls', namespace='board')),
+    path('helpdesk/', include('helpdesk.urls', namespace='helpdesk')),
 ]
 
 if settings.DEBUG:

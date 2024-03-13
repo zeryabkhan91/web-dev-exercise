@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
 <div class="container-fluid pt-1 h-100">
@@ -17,29 +16,7 @@
           </div>
           <div class="cards">
             {% for ticket in column.get_tickets %}
-              <div class="card border-0 shadow m-3 mt-0">
-                <div class="card-body">
-                  <h5 class="card-title text-break text-wrap">{{ ticket.title }}</h5>
-                  <span class="badge rounded-pill mb-2" style="background-color: #{{ ticket.priority.color }};">{{ ticket.priority.name }}</span>
-                  <p class="mb-1">
-                    {{ ticket.status.name }}
-                  </p>
-                  <p class="mb-1">
-                    {{ ticket.category.name }}
-                  </p>
-                  <p class="mb-0">
-                    {% for assignment in ticket.assigned_to.all %}
-                      <img
-                        src="{% static assignment.get_image_url %}"
-                        title="{{ assignment.name }}"
-                        class="rounded-circle ratio ratio-1x1 profile-image"
-                        alt="Image of {{ assignment.name }}"
-                        style="width: 3rem;"
-                      >
-                    {% endfor %}
-                  </p>
-                </div>
-              </div>
+              {% include 'board/ticket.html' %}
             {% empty %}
               <div class="text-center text-secondary">
                 <i class="bi bi-emoji-smile-fill"></i>

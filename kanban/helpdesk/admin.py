@@ -24,6 +24,6 @@ class PriorityAdmin(admin.ModelAdmin):
 
 @admin.register(models.Ticket)
 class TicketAdmin(admin.ModelAdmin):
-    list_display = ('title', 'status', 'category', 'priority')
+    list_display = ('title', 'id', 'status', 'category', 'priority')
     search_fields = ('title',)
     list_filter = ('status', 'category', 'priority')

@@ -1,0 +1,31 @@
+{% load static %}
+<div class="card border-0 shadow m-3 mt-0" data-ticket-id="{{ ticket.id }}" data-ticket-rank="{{ ticket.rank|default_if_none:'' }}">
+  <div class="card-body">
+    <h5 class="card-title text-break text-wrap">{{ ticket.title }}</h5>
+    <span class="badge rounded-pill mb-2" style="background-color: #{{ ticket.priority.color }};">{{ ticket.priority.name }}</span>
+    <p class="mb-1">
+      {{ ticket.status.name }}
+    </p>
+    <p class="mb-1">
+      {{ ticket.category.name }}
+    </p>
+    <p class="mb-0">
+      {% for assignment in ticket.assigned_to.all %}
+        <img
+          src="{% static assignment.get_image_url %}"
+          title="{{ assignment.name }}"
+          class="rounded-circle ratio ratio-1x1 profile-image"
+          alt="Image of {{ assignment.name }}"
+          style="width: 3rem;"
+        >
+      {% endfor %}
+    </p>
+    {% comment %}
+      This Edit button is for development use only. It gives an easy way to get to the ticket edit form.
+      To hide it temporarily, comment it out or add the `d-none` class to the `p` tag.
+    {% endcomment %}
+    <p class="mt-1">
+      <a href="{% url 'helpdesk:update-ticket' ticket.id %}" class="btn btn-primary btn-sm">Edit</a>
+    </p>
+  </div>
+</div>

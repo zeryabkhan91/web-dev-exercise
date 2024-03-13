@@ -18,4 +18,4 @@ class Column(models.Model):
         return self.name
 
     def get_tickets(self):
-        return Ticket.objects.filter(status__in=self.statuses.all()).order_by('rank', 'id')
+        return Ticket.objects.filter(status__in=self.statuses.all()).order_by('-rank', 'id')
