@@ -40,7 +40,14 @@ There is no JavaScript install/build step for this app.
 
 You should use the db.sqlite3 file included in the repo. No special steps are required to use it.
 
+Go to the project directory.
+
+```
+cd kanban/
+```
+
 Make yourself a superuser for use on the admin site (/admin).
+
 ```
 python manage.py createsuperuser
 ```
