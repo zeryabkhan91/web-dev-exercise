@@ -57,6 +57,10 @@ Run the app.
 python manage.py runserver
 ```
 
+When you browse to the local site at [http://127.0.0.1:8000/](http://127.0.0.1:8000/), and click one of the Kanban boards, you'll see something like this:
+
+![Kanban board](screenshot.png)
+
 Run the tests.
 
 ```
