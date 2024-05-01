@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, connection
 from helpdesk.models import Ticket
 
 
@@ -17,5 +17,26 @@ class Column(models.Model):
     def __str__(self):
         return self.name
 
-    def get_tickets(self):
-        return Ticket.objects.filter(status__in=self.statuses.all()).order_by('-rank', 'id')
+    def get_tickets(self, filters):
+        tickets = Ticket.objects.filter(status__in=self.statuses.all()).order_by('-rank', 'id')
+
+        if filters.get('search'):
+            tickets = tickets.filter(title__icontains=filters.get('search'))
+        
+        if filters.get('category'):
+            tickets = tickets.filter(category=filters.get('category'))
+        
+        if filters.get('priority'):
+            tickets = tickets.filter(priority=filters.get('priority'))
+        
+        if filters.get('engineer'):
+            tickets = tickets.filter(assigned_to=filters.get('engineer'))
+        
+        tickets = tickets.prefetch_related(
+            'status',
+            'priority',
+            'assigned_to',
+            'category'
+        )
+        
+        return tickets

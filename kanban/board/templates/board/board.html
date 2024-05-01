@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load custom_tags %}
+{% load static %}
 
 {% block content %}
 <div class="container-fluid pt-1 h-100">
@@ -15,13 +17,14 @@
             <h4 class="mb-0">{{ column.name }}</h4>
           </div>
           <div class="cards">
-            {% for ticket in column.get_tickets %}
-              {% include 'board/ticket.html' %}
+            {% get_filtered_tickets column filters as column_tickets %}
+            {% for ticket in column_tickets %}
+                {% include 'board/ticket.html' %}
             {% empty %}
-              <div class="text-center text-secondary">
-                <i class="bi bi-emoji-smile-fill"></i>
-                <p>No tickets in this column</p>
-              </div>
+                <div class="text-center text-secondary">
+                    <i class="bi bi-emoji-smile-fill"></i>
+                    <p>No tickets in this column</p>
+                </div>
             {% endfor %}
           </div>
         </div>
