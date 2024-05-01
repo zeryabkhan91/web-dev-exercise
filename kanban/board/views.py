@@ -13,9 +13,6 @@ class BoardView(DetailView, FormView):
     model = models.KanbanBoard
     template_name = 'board/board.html'
     
-    # def get_tickets_for_column(self, column, search=None, category=None, priority=None, engineer=None):
-    #     return column.get_tickets(search=search, category=category, priority=priority, engineer=engineer)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
