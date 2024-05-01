@@ -12,6 +12,16 @@ class BoardView(DetailView, FormView):
     form_class = TicketFilterForm
     model = models.KanbanBoard
     template_name = 'board/board.html'
+
+    def get_initial(self):
+        initial = super().get_initial()
+        # Set initial values from request.GET
+        initial['search'] = self.request.GET.get('search', '')
+        initial['category'] = self.request.GET.get('category', None)
+        initial['priority'] = self.request.GET.get('priority', None)
+        initial['engineer'] = self.request.GET.get('engineer', None)
+        return initial
+
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
