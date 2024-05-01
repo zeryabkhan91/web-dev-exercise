@@ -1,5 +1,6 @@
-{% extends 'base.html' %}
-{% load custom_tags %}
+{% extends 'base.html' %} 
+{% load custom_tags %} 
+{% load static %} 
 
 {% block content %}
 <div class="container-fluid pt-1 h-100">
@@ -10,28 +11,35 @@
   </div>
   <div class="row">
     <div class="d-flex flex-items-stretch text-nowrap pb-4">
-    {% for column in object.column_set.all %}
-        <div class="bg-light p-0 rounded d-inline-block shadow me-2" style="width: 20rem;">
-          <div class="sticky-top bg-light rounded p-3" style="z-index: 999;/* Less than nav menu */">
-            <h4 class="mb-0">{{ column.name }}</h4>
-          </div>
-          <div class="cards">
-            {% get_filtered_tickets column filters as column_tickets %}
-            {% for ticket in column_tickets %}
-                {% include 'board/ticket.html' %}
-            {% empty %}
-                <div class="text-center text-secondary">
-                    <i class="bi bi-emoji-smile-fill"></i>
-                    <p>No tickets in this column</p>
+        {% for column in object.column_set.all %}
+            <div class="bg-light p-0 rounded d-inline-block shadow me-2" style="width: 20rem">
+                <div class="sticky-top bg-light rounded p-3" style="z-index: 999; /* Less than nav menu */">
+                    <h4 class="mb-0">{{ column.name }}</h4>
                 </div>
-            {% endfor %}
-          </div>
-        </div>
-      {% endfor %}
+                <div class="cards" data-column-id="{{column.id}}" data-board-id="{{column.board.id}}">
+                    {% get_filtered_tickets column filters as column_tickets %}
+                    {% for ticket in column_tickets %} 
+                        {% include 'board/ticket.html' %} 
+                    {% empty %}
+                    <div class="text-center text-secondary">
+                        <i class="bi bi-emoji-smile-fill"></i>
+                        <p>No tickets in this column</p>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
     </div>
   </div>
 </div>
-{% endblock %}
+<script>
+  const csrfToken = '{{csrf_token}}';
+</script>
+<!-- Sorting Library -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+<!-- Custom JS -->
+<script src="{% static 'board/sorting.js' %}"></script>
+{% endblock %} 
 
 {% block extracss %}
 <style>

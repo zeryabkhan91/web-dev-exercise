@@ -33,7 +33,7 @@ class TicketFilterForm(forms.Form):
         
     def filter_tickets(self, tickets):
         if self.cleaned_data.get("search"):
-            tickets = tickets.filter(title__icontains=search_query)
+            tickets = tickets.filter(title__icontains=self.cleaned_data.get("search"))
         
         if self.cleaned_data.get("category"):
             tickets = tickets.filter(category=self.cleaned_data.get("category"))

@@ -29,7 +29,6 @@ class BoardView(DetailView, FormView):
         }
 
         return context
-    
 
 
 class TicketView(DetailView):
