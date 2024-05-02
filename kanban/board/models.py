@@ -32,11 +32,10 @@ class Column(models.Model):
         if filters.get('engineer'):
             tickets = tickets.filter(assigned_to=filters.get('engineer'))
         
-        tickets = tickets.prefetch_related(
+        tickets = tickets.select_related(
             'status',
             'priority',
-            'assigned_to',
             'category'
-        )
+        ).prefetch_related('assigned_to',)
         
         return tickets
